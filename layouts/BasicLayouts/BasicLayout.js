@@ -1,13 +1,16 @@
-import React from 'react';
-import {Container} from 'semantic-ui-react';
+import Header from "@/components/Header";
+import classNames from "classnames";
+import React from "react";
 
-export default function BasicLayout({children}) {
+export default function BasicLayout({ children, className }) {
   return (
-    <Container fluid className='basic-layout' >
-        <Container className='content'>
-            {children}
-        </Container>
-        
-    </Container>
-  )
+    <div
+      className={classNames("basic-layout", {
+        [className]: className,
+      })}
+    >
+      <Header />
+      <div className="content">{children}</div>
+    </div>
+  );
 }

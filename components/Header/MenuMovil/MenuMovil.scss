@@ -1,0 +1,62 @@
+.menuMovil {
+  height: 90px;
+  background-color: $segundary2;
+
+  &__left {
+    display: flex !important;
+    align-items: center;
+    img {
+      height: 65px;
+      transition: all 0.5s;
+
+      &:hover {
+        transform: translate(-15px);
+      }
+    }
+  }
+
+  &__right {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.ui.dimmer {
+  padding: 0 !important;
+  align-items: baseline !important;
+
+  .ui.small.modal {
+    margin: 0 !important;
+    top: 0;
+    bottom: 0;
+    width: 270px;
+    background-color: $segundary2;
+
+    .content {
+      background: transparent;
+      .ui.menu {
+        border: 0;
+        box-shadow: none;
+        width: 100%;
+        background: transparent;
+
+        .icon {
+          color: $font-light;
+        }
+
+        .item {
+          color: $font-light;
+
+          &:hover {
+            color: $font-light;
+            background-color: $background-dark-absolute;
+            &:before {
+              background-color: $background-dark-absolute;
+            }
+          }
+        }
+      }
+    }
+  }
+}

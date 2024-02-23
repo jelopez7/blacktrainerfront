@@ -1,2 +1,14 @@
+@import "./colors.scss";
+
+// layouts
 @import "../layouts/BasicLayouts/BasicLayout.scss";
 
+//components
+@import "../components/Header/Header.scss";
+@import "../components/Header/Menu/Menu.scss";
+@import "../components/Header/MenuMovil/MenuMovil.scss";
+@import "../components/Auth/LoginForm/LoginForm.scss";
+
+//pages
+@import "../pages/auth.scss";
+@import "../pages/index.scss";

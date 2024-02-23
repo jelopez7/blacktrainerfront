@@ -1,8 +1,7 @@
 .basic-layout{
     min-height: 100vh;
-
+    background-color: $background-grey-dark; 
     .content{
-        background-color: #eee;
-        height: 100vh;
+        padding: 15px 15px 20px 20px;
     }
 }
