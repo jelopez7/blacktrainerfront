@@ -1,9 +1,9 @@
 import { httpConToken } from "../helpers/http";
 
-export async function getExerciseApi() {
+export async function getTypes() {
   try {
     const { data } = await httpConToken.get(
-      `/content-manager/collection-types/api::exercise.exercise?populate[group][populate][image]`
+      `/content-manager/collection-types/api::type.type`
     );
     return data;
   } catch (error) {
