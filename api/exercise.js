@@ -1,9 +1,9 @@
-import { httpConToken } from "../helpers/http";
+import { httpConToken, httpSinToken } from "../helpers/http";
 
 export async function getExerciseApi() {
   try {
-    const { data } = await httpConToken.get(
-      `/content-manager/collection-types/api::exercise.exercise?populate[group][populate][image]`
+    const { data } = await httpSinToken.get(
+      `/api/exercises?populate[group][populate][image]=*&populate[image]=*`
     );
     return data;
   } catch (error) {

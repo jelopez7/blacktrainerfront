@@ -9,11 +9,8 @@ import { Provider } from "react-redux";
 import { useDispatch } from "react-redux";
 import { store } from "../store/store";
 import { startChecking } from "../actions/auth";
-import ReactGA from "react-ga4";
-import "react-calendar/dist/Calendar.css";
 
-const TRACKING_ID = "G-RZJKH11MDZ";
-ReactGA.initialize(TRACKING_ID);
+import "react-calendar/dist/Calendar.css";
 
 function MyApp({ Component, pageProps }) {
   return (

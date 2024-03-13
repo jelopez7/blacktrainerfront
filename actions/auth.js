@@ -52,8 +52,8 @@ export const startLogin = (formData) => {
     try {
       const { data } = await httpSinToken.post("/admin/login", formData);
       if (data) {
-        setToken(data.data.token);
         dispath(Login(data.data));
+        setToken(data.data.token);
       }
     } catch (error) {
       console.log(error);
