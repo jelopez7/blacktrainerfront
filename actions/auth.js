@@ -54,6 +54,7 @@ export const startLogin = (formData) => {
       if (data) {
         dispath(Login(data.data));
         setToken(data.data.token);
+        window.location.replace("/");
       }
     } catch (error) {
       console.log(error);

@@ -1,7 +1,7 @@
 import { getExerciseApi } from "@/api/exercise";
 import { getUsersApi } from "@/api/user";
 import BasicLayout from "@/layouts/BasicLayouts";
-import { filter, map, size } from "lodash";
+import { filter, isEmpty, map, size } from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -95,7 +95,7 @@ export default function Home() {
         } else {
           setExercise([]);
         }
-        if (size(response2.results) > 0) {
+        if (size(response2.results)) {
           setUsers(response2.results);
           setUsersOptions(
             map(response2.results, (obj) => {
@@ -207,7 +207,11 @@ export default function Home() {
     },
   });
 
-  if (size(groupsOptions) == 0) {
+  if (
+    size(groupsOptions) == 0 ||
+    size(usersOptions) == 0 ||
+    size(typesOptions) == 0
+  ) {
     return <Loader active>Cargando</Loader>;
   }
 
@@ -237,7 +241,7 @@ export default function Home() {
               </label>
               <div className="card">
                 <Dropdown
-                  placeholder="Selecciona el ejercicio"
+                  placeholder="Selecciona el musculo"
                   fluid
                   search
                   selection

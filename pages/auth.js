@@ -10,7 +10,7 @@ export default function Auth() {
   const router = useRouter();
 
   useEffect(() => {
-    if (user) {
+    if (user && window !== "undefined") {
       router.push("/"); // Redirige a la página de inicio de sesión si el usuario no está autenticado
     }
   }, [user, router]);

@@ -5,7 +5,6 @@ export async function getUsersApi() {
     const { data } = await httpConToken.get(
       `/content-manager/collection-types/plugin::users-permissions.user`
     );
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
