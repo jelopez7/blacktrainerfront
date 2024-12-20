@@ -27,3 +27,15 @@ export async function setRoutineApi(formValue) {
     return null;
   }
 }
+
+export async function deleteRoutineApi(idRoutine) {
+  try {
+    const { data } = await httpConToken.delete(
+      `/content-manager/collection-types/api::routine.routine/${idRoutine}`
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

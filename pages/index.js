@@ -29,12 +29,13 @@ import {
   breakpointUpSm,
   breakpointUpXl,
 } from "../utils/breakpoints";
-import { getRoutines, setRoutineApi } from "@/api/routine";
+import { deleteRoutineApi, getRoutines, setRoutineApi } from "@/api/routine";
 import moment from "moment";
 import { getTypes } from "@/api/type";
 import { getGroups } from "@/api/muscle";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 export default function Home() {
   const { user } = useSelector((state) => state.auth);
@@ -193,6 +194,25 @@ export default function Home() {
       series: value.series,
       type: value.type.name,
       description: value.description,
+    });
+  };
+
+  const handleDeleteRoutine = async (value) => {
+    Swal.fire({
+      title: "¿Quieres eliminar este ejercicio?",
+      showCancelButton: true,
+      confirmButtonText: "SI!",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await deleteRoutineApi(value.id);
+        if (response) {
+          handleUSer(formik.values.user);
+          Swal.fire("Eliminado correctamente", "", "success");
+        } else {
+          Swal.fire("No se pudo eliminar", "", "warning");
+        }
+      }
     });
   };
 
@@ -370,13 +390,20 @@ export default function Home() {
                 <Table called selectable>
                   <TableBody>
                     {map(routineDate, (obj) => (
-                      <TableRow>
+                      <TableRow key={obj.id}>
                         <TableCell onClick={() => handleRoutine(obj)}>
                           {obj.exercise.name}
                         </TableCell>
                         <TableCell>{obj.series}</TableCell>
                         <TableCell>{obj.reps}</TableCell>
                         <TableCell>{obj.type.name}</TableCell>
+                        <TableCell>
+                          <Icon
+                            onClick={() => handleDeleteRoutine(obj)}
+                            name="ban"
+                            link
+                          />
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
