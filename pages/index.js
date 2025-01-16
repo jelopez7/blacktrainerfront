@@ -228,10 +228,28 @@ export default function Home() {
     initialValues: initialValues(date),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
-      console.log(formData);
+      const start = moment(formData.date);
+
+      let currentMonday = start.clone().day(1);
+      const mondays = [];
+      for (let i = 0; i < 4; i++) {
+        // Solo necesitamos los próximos 3 lunes
+        mondays.push(currentMonday.format("YYYY-MM-DD"));
+        currentMonday = currentMonday.add(1, "week");
+      }
 
       setIsLoading(true);
-      await setRoutineApi(formData);
+
+      for (const monday of mondays) {
+        const updatedFormData = { ...formData, date: monday };
+
+        try {
+          await setRoutineApi(updatedFormData);
+        } catch (error) {
+          console.error(`Error al establecer rutina para el ${monday}:`, error);
+        }
+      }
+
       setIsLoading(false);
       handleUSer(formik.values.user);
     },
