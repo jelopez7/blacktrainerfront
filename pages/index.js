@@ -50,6 +50,8 @@ export default function Home() {
     type: "",
     reps: "",
     series: "",
+    minutes: "",
+    weight: "",
   });
   const [users, setUsers] = useState(null);
   const [usersOptions, setUsersOptions] = useState([]);
@@ -171,6 +173,10 @@ export default function Home() {
             key: objee.id,
             value: objee,
             text: objee.attributes.name,
+            image: {
+              avatar: true,
+              src: objee.attributes.image.data[0].attributes.url,
+            },
           };
         }
       )
@@ -192,6 +198,8 @@ export default function Home() {
       image: value.exercise.image[0].url,
       reps: value.reps,
       series: value.series,
+      minutes: value.minutes,
+      weight: value.weight,
       type: value.type.name,
       description: value.description,
     });
@@ -220,6 +228,8 @@ export default function Home() {
     initialValues: initialValues(date),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
+      console.log(formData);
+
       setIsLoading(true);
       await setRoutineApi(formData);
       setIsLoading(false);
@@ -283,6 +293,7 @@ export default function Home() {
                 <Form.Field>
                   <Dropdown
                     placeholder="Selecciona el ejercicio"
+                    className="exerciseDropdown"
                     fluid
                     search
                     selection
@@ -318,14 +329,12 @@ export default function Home() {
                   <GridColumn width={8}>
                     <Grid>
                       <GridColumn width={8}>
-                        <Form.Field>
-                          <Input
-                            type="number"
-                            name="series"
-                            onChange={formik.handleChange}
-                            error={formik.errors.series}
-                          />
-                        </Form.Field>
+                        <Input
+                          type="number"
+                          name="series"
+                          onChange={formik.handleChange}
+                          error={formik.errors.series}
+                        />
                         <label className="label-config">Series</label>
                       </GridColumn>
                       <GridColumn width={8}>
@@ -338,10 +347,31 @@ export default function Home() {
                         <label className="label-config">Repeticiones</label>
                       </GridColumn>
                     </Grid>
+
+                    <Grid>
+                      <GridColumn width={8}>
+                        <label className="label-config">Peso en KG</label>
+                        <Input
+                          type="number"
+                          name="weight"
+                          onChange={formik.handleChange}
+                          error={formik.errors.weight}
+                        />
+                      </GridColumn>
+                      <GridColumn width={8}>
+                        <label className="label-config">Minutos</label>
+                        <Input
+                          type="number"
+                          name="minutes"
+                          onChange={formik.handleChange}
+                          error={formik.errors.minutes}
+                        />
+                      </GridColumn>
+                    </Grid>
                     <br />
                     <label className="label-config">Tipo</label>
                     <Dropdown
-                      placeholder="Selecciona el tipo"
+                      placeholder="Tipo"
                       fluid
                       search
                       selection
@@ -352,6 +382,7 @@ export default function Home() {
                         formik.setFieldValue("type", data.value)
                       }
                     />
+
                     <br />
                     <Button
                       type="submit"
@@ -431,7 +462,7 @@ export default function Home() {
                           <Input
                             disabled
                             type="text"
-                            value={routineSelect.series}
+                            value={routineSelect.series || "0"}
                           />
                         </Form.Field>
                       </GridColumn>
@@ -441,7 +472,29 @@ export default function Home() {
                           <Input
                             disabled
                             type="text"
-                            value={routineSelect.reps}
+                            value={routineSelect.reps || "0"}
+                          />
+                        </Form.Field>
+                      </GridColumn>
+                    </Grid>
+                    <Grid>
+                      <GridColumn width={8}>
+                        <Form.Field>
+                          <label className="label-config">Peso</label>
+                          <Input
+                            disabled
+                            type="text"
+                            value={`${routineSelect.weight || "0"} KG`}
+                          />
+                        </Form.Field>
+                      </GridColumn>
+                      <GridColumn width={8}>
+                        <Form.Field>
+                          <label className="label-config">Minutos</label>
+                          <Input
+                            disabled
+                            type="text"
+                            value={routineSelect.minutes || "0"}
                           />
                         </Form.Field>
                       </GridColumn>
@@ -477,6 +530,8 @@ function initialValues(date) {
     date: moment(date).format("YYYY-MM-DD"),
     series: "",
     reps: "",
+    minutes: "",
+    weight: "",
     type: "",
   };
 }
@@ -489,6 +544,8 @@ function validationSchema() {
     date: Yup.string().required(true),
     series: Yup.string().required(true),
     reps: Yup.string().required(true),
+    minutes: Yup.string().required(true),
+    weight: Yup.string().required(true),
     type: Yup.string().required(true),
   };
 }

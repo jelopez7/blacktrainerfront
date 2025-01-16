@@ -25,7 +25,7 @@
   }
 
   .card {
-    height: 300px;
+    height: 350px;
     background: #eee;
     border-radius: 10px;
     margin-top: 10px;
@@ -38,6 +38,16 @@
     textarea {
       height: 100%;
       font-size: 20px;
+    }
+  }
+
+  .exerciseDropdown {
+    .visible.menu.transition {
+      height: auto;
+      .ui.avatar.image {
+        max-height: 100px;
+        height: 100px;
+      }
     }
   }
 
