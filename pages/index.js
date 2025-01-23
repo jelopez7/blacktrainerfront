@@ -232,7 +232,7 @@ export default function Home() {
 
       let currentMonday = start.clone().day(1);
       const mondays = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 8; i++) {
         // Solo necesitamos los próximos 3 lunes
         mondays.push(currentMonday.format("YYYY-MM-DD"));
         currentMonday = currentMonday.add(1, "week");
