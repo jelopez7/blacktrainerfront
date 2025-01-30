@@ -21,4 +21,11 @@ const httpConToken = axios.create({
   },
 });
 
-export { httpSinToken, httpConToken };
+const httpConTokenImage = axios.create({
+  baseURL,
+  headers: {
+    "Content-type": "multipart/form-data",
+  },
+});
+
+export { httpSinToken, httpConToken, httpConTokenImage };
