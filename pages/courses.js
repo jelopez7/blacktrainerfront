@@ -36,7 +36,10 @@ export default function courses() {
       {selectedComponent(renderComponent)}
 
       {renderComponent === "coursersForm" && courses ? (
-        <CoursesList courses={courses} />
+        <CoursesList
+          setRenderComponent={setRenderComponent}
+          courses={courses}
+        />
       ) : null}
     </BasicLayout>
   );

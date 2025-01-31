@@ -2,26 +2,34 @@ import React from "react";
 import { Icon, Image, Rating } from "semantic-ui-react";
 import { map } from "lodash";
 
-export default function CoursesList({ courses }) {
+export default function CoursesList({ courses, setRenderComponent }) {
+  const handleCourses = (course) => {
+    setRenderComponent("addDAy", course);
+  };
+
   return (
     <div className="coursesList">
       <div className="content">
-        {map(courses, (courses, index) => (
-          <div key={index} className="cardCourses">
+        {map(courses, (course, index) => (
+          <div
+            key={index}
+            className="cardCourses"
+            onClick={() => handleCourses(course)}
+          >
             <Image
               className="imageCourse"
               src={
-                courses.photo
-                  ? courses.photo
+                course.photo
+                  ? course.photo
                   : "https://cdn.fitnessonlineapp.com/uploads/ma/file/543/385a663203042b78.jpg"
               }
               alt="Blackfitness"
             />
             <div className="text-overlay">
-              <h1 className="titleCourses">{courses.name}</h1>
-              {courses.categories && (
+              <h1 className="titleCourses">{course.name}</h1>
+              {course.categories && (
                 <div>
-                  <Icon name="fire" /> <span>{courses.categories[1]}</span>{" "}
+                  <Icon name="fire" /> <span>{course.categories[1]}</span>{" "}
                   <Rating
                     className="rating"
                     defaultRating={3}
@@ -29,12 +37,12 @@ export default function CoursesList({ courses }) {
                     icon="star"
                     disabled
                   />{" "}
-                  <span>{courses.categories[2]}</span>
+                  <span>{course.categories[2]}</span>
                 </div>
               )}
 
-              {courses.contents && (
-                <p className="infoCourses">{courses.contents[0]}</p>
+              {course.contents && (
+                <p className="infoCourses">{course.contents[0]}</p>
               )}
             </div>
           </div>
