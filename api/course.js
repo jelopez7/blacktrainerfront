@@ -11,3 +11,19 @@ export async function getCourses() {
     return null;
   }
 }
+
+export async function createCourses(formData) {
+  try {
+    const { data } = await httpConToken.post(
+      `/content-manager/collection-types/api::course.course`,
+      formData
+    );
+    await httpConToken.post(
+      `/content-manager/collection-types/api::course.course/${data.id}/actions/publish`
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

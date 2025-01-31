@@ -3,6 +3,7 @@ import { Button, Form, Input } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "animate.css";
+import { createCourses } from "@/api/course";
 
 export default function CoursesForm({ setRenderComponent }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,9 +13,11 @@ export default function CoursesForm({ setRenderComponent }) {
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
       setIsLoading(true);
-
-      console.log(formData);
-      setRenderComponent("addDAy");
+      const response = await createCourses(formData);
+      setIsLoading(false);
+      if (response) {
+        setRenderComponent("addDAy", response);
+      }
     },
   });
   return (
@@ -25,11 +28,11 @@ export default function CoursesForm({ setRenderComponent }) {
             <label>Titulo</label>
             <Input
               type="text"
-              name="title"
+              name="name"
               placeholder=""
               icon="sign language"
               onChange={formik.handleChange}
-              error={formik.errors.title}
+              error={formik.errors.name}
             />
           </Form.Field>
 
@@ -44,12 +47,12 @@ export default function CoursesForm({ setRenderComponent }) {
 
 function initialValues() {
   return {
-    title: "",
+    name: "",
   };
 }
 
 function validationSchema() {
   return {
-    title: Yup.string().required(true),
+    name: Yup.string().required(true),
   };
 }

@@ -20,12 +20,12 @@ export default function courses() {
     getCoursesApi();
   }, []);
 
-  const selectedComponent = (key) => {
+  const selectedComponent = (key, data = null) => {
     if (key === "coursersForm") {
       return <CoursesForm setRenderComponent={setRenderComponent} />;
     }
     if (key === "addDAy") {
-      return <AddDay setRenderComponent={setRenderComponent} />;
+      return <AddDay setRenderComponent={setRenderComponent} data={data} />;
     }
   };
 
@@ -35,7 +35,9 @@ export default function courses() {
 
       {selectedComponent(renderComponent)}
 
-      {courses ? <CoursesList courses={courses} /> : null}
+      {renderComponent === "coursersForm" && courses ? (
+        <CoursesList courses={courses} />
+      ) : null}
     </BasicLayout>
   );
 }

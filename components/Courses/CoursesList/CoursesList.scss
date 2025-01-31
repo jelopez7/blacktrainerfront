@@ -9,11 +9,19 @@
     border-radius: 10px;
     margin-right: auto;
     height: 400px;
+    overflow: scroll;
 
     .cardCourses {
       position: relative;
       display: inline-block;
       background-color: transparent;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(0.97);
+      }
 
       img {
         display: block;
@@ -24,6 +32,7 @@
       .text-overlay {
         h1 {
           text-align: start;
+          transition: transform 0.4s ease;
         }
         position: absolute;
         top: 10px; /* Ajusta la posición vertical del texto */
@@ -31,10 +40,12 @@
         color: white; /* Color del texto */
 
         padding: 10px; /* Espaciado interno del texto */
+        transition: transform 0.4s ease;
 
         .rating {
           .icon {
             color: white !important;
+            transition: transform 0.4s ease;
           }
         }
       }

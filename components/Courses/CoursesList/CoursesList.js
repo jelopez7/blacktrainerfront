@@ -19,18 +19,23 @@ export default function CoursesList({ courses }) {
             />
             <div className="text-overlay">
               <h1 className="titleCourses">{courses.name}</h1>
-              <div>
-                <Icon name="fire" /> <span>{courses.categories[1]}</span>{" "}
-                <Rating
-                  className="rating"
-                  defaultRating={3}
-                  maxRating={5}
-                  icon="star"
-                  disabled
-                />{" "}
-                <span>{courses.categories[2]}</span>
-              </div>
-              <p className="infoCourses">{courses.contents[0]}</p>
+              {courses.categories && (
+                <div>
+                  <Icon name="fire" /> <span>{courses.categories[1]}</span>{" "}
+                  <Rating
+                    className="rating"
+                    defaultRating={3}
+                    maxRating={5}
+                    icon="star"
+                    disabled
+                  />{" "}
+                  <span>{courses.categories[2]}</span>
+                </div>
+              )}
+
+              {courses.contents && (
+                <p className="infoCourses">{courses.contents[0]}</p>
+              )}
             </div>
           </div>
         ))}

@@ -4,7 +4,7 @@ course = {
   active_to: null,
   name: "MUSCULACION: centrada en brazos",
   mission: null,
-  template_id: null,
+  template_id: null, // adasd
   length: 0,
   course_status: "published",
   handbook_tag_ids: [],
