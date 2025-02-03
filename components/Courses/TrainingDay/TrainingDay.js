@@ -17,8 +17,6 @@ export default function TrainingDay() {
     );
 
     setTrainingDays(reorderedItems);
-
-    console.log(trainingDays);
   };
 
   return (

@@ -7,7 +7,10 @@ import CoursesList from "@/components/Courses/CoursesList";
 import { getCourses } from "@/api/course";
 
 export default function courses() {
-  const [renderComponent, setRenderComponent] = useState("coursersForm");
+  const [renderComponent, setRenderComponent] = useState({
+    key: "coursersForm",
+    data: null,
+  });
   const [courses, setCoursesCompoenent] = useState(null);
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export default function courses() {
     getCoursesApi();
   }, []);
 
-  const selectedComponent = (key, data = null) => {
+  const selectedComponent = ({ key, data }) => {
     if (key === "coursersForm") {
       return <CoursesForm setRenderComponent={setRenderComponent} />;
     }
@@ -35,7 +38,7 @@ export default function courses() {
 
       {selectedComponent(renderComponent)}
 
-      {renderComponent === "coursersForm" && courses ? (
+      {renderComponent.key === "coursersForm" && courses ? (
         <CoursesList
           setRenderComponent={setRenderComponent}
           courses={courses}

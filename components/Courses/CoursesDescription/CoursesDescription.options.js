@@ -30,7 +30,7 @@ export const frequencyOptions = [
   {
     key: "one_times_a_week",
     text: "1 sesion por semana",
-    value: "three_times_a_week",
+    value: "one_times_a_week",
   },
   {
     key: "two_times_a_week",
@@ -71,9 +71,9 @@ export const categoriesOptions = [
     value: "para mujer",
   },
   {
-    key: "para  gimnasio",
-    text: "Para  gimnasio",
-    value: "para gimansio",
+    key: "para gimnasio",
+    text: "Para gimnasio",
+    value: "para gimnasio",
   },
   {
     key: "para casa",
@@ -81,9 +81,9 @@ export const categoriesOptions = [
     value: "para casa",
   },
   {
-    key: "Pro",
+    key: "pro",
     text: "Pro",
-    value: "Pro",
+    value: "pro",
   },
   {
     key: "Sin experiencia",

@@ -9,10 +9,10 @@ import {
   breakpointUpSm,
   breakpointUpXl,
 } from "@/utils/breakpoints";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function AddDay({ setRenderComponent, data }) {
-  console.log(data);
-
   const { width } = useWindowSize();
 
   const getColumnsRender = () => {
@@ -32,37 +32,12 @@ export default function AddDay({ setRenderComponent, data }) {
 
   return (
     <>
-      <div className="addDay animate__animated animate__bounce">
-        <Form>
-          <div className="content">
-            <div
-              className="back"
-              onClick={() => setRenderComponent("coursersForm")}
-            >
-              <Icon name="arrow circle left" color="teal" link size="large" />
-            </div>
-
-            <Form.Field>
-              <label>Nombre del entrenamiento</label>
-              <Input
-                type="text"
-                name="title"
-                placeholder=""
-                icon="pencil alternate"
-              />
-            </Form.Field>
-
-            <Button type="submit" inverted color="green">
-              Guardar
-            </Button>
-          </div>
-        </Form>
-      </div>
+      <RenderForm setRenderComponent={setRenderComponent} />
 
       <Grid className="contentCoursesDef" columns={getColumnsRender()}>
         <Grid.Row>
           <Grid.Column>
-            <CoursesDescription />
+            <CoursesDescription course={data} />
           </Grid.Column>
           <Grid.Column>
             <TrainingDay />
@@ -71,4 +46,58 @@ export default function AddDay({ setRenderComponent, data }) {
       </Grid>
     </>
   );
+}
+
+function RenderForm({ setRenderComponent }) {
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: Yup.object(validationSchema()),
+    onSubmit: async (formData) => {
+      console.log(formData);
+    },
+  });
+  return (
+    <div className="addDay animate__animated animate__bounce">
+      <Form onSubmit={formik.handleSubmit}>
+        <div className="content">
+          <div
+            className="back"
+            onClick={() =>
+              setRenderComponent({ key: "coursersForm", data: null })
+            }
+          >
+            <Icon name="arrow circle left" color="teal" link size="large" />
+          </div>
+
+          <Form.Field>
+            <label>Nombre del entrenamiento</label>
+            <Input
+              type="text"
+              name="title"
+              placeholder=""
+              icon="pencil alternate"
+              onChange={formik.handleChange}
+              error={formik.errors.title}
+            />
+          </Form.Field>
+
+          <Button type="submit" inverted color="green">
+            Guardar
+          </Button>
+        </div>
+      </Form>
+    </div>
+  );
+}
+
+function initialValues() {
+  return {
+    title: "",
+  };
+}
+
+function validationSchema() {
+  return {
+    title: Yup.string().required(true),
+  };
 }

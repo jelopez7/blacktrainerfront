@@ -1,10 +1,11 @@
 import React from "react";
 import { Icon, Image, Rating } from "semantic-ui-react";
-import { map } from "lodash";
+import { map, find } from "lodash";
+import { levelOptions } from "../CoursesDescription/CoursesDescription.options";
 
 export default function CoursesList({ courses, setRenderComponent }) {
   const handleCourses = (course) => {
-    setRenderComponent("addDAy", course);
+    setRenderComponent({ key: "addDAy", data: course });
   };
 
   return (
@@ -27,19 +28,28 @@ export default function CoursesList({ courses, setRenderComponent }) {
             />
             <div className="text-overlay">
               <h1 className="titleCourses">{course.name}</h1>
-              {course.categories && (
-                <div>
-                  <Icon name="fire" /> <span>{course.categories[1]}</span>{" "}
-                  <Rating
-                    className="rating"
-                    defaultRating={3}
-                    maxRating={5}
-                    icon="star"
-                    disabled
-                  />{" "}
-                  <span>{course.categories[2]}</span>
-                </div>
-              )}
+
+              <div>
+                {course.training_for && (
+                  <>
+                    <Icon name="fire" /> <span>{course.categories[1]}</span>{" "}
+                  </>
+                )}
+                {course.level && (
+                  <>
+                    <Rating
+                      className="rating"
+                      defaultRating={course.level}
+                      maxRating={course.level}
+                      icon="star"
+                      disabled
+                    />{" "}
+                    <span>
+                      {find(levelOptions, { key: course.level + "" }).text}
+                    </span>
+                  </>
+                )}
+              </div>
 
               {course.contents && (
                 <p className="infoCourses">{course.contents[0]}</p>
