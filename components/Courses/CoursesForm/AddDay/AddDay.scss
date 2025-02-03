@@ -13,6 +13,10 @@
 
   .ui.form {
     text-align: center;
+    .back {
+      position: absolute;
+      top: 10px;
+    }
     .field {
       .input {
         margin-bottom: 5px;
@@ -32,4 +36,8 @@
       }
     }
   }
+}
+
+.contentCoursesDef {
+  margin-top: 50px !important;
 }
