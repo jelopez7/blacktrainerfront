@@ -2,8 +2,11 @@ import React from "react";
 import { Icon, Image, Rating } from "semantic-ui-react";
 import { map, find } from "lodash";
 import { levelOptions } from "../CoursesDescription/CoursesDescription.options";
+import { useSelector } from "react-redux";
 
-export default function CoursesList({ courses, setRenderComponent }) {
+export default function CoursesList({ setRenderComponent }) {
+  const { data } = useSelector((state) => state.course);
+
   const handleCourses = (course) => {
     setRenderComponent({ key: "addDAy", data: course });
   };
@@ -11,7 +14,7 @@ export default function CoursesList({ courses, setRenderComponent }) {
   return (
     <div className="coursesList">
       <div className="content">
-        {map(courses, (course, index) => (
+        {map(data, (course, index) => (
           <div
             key={index}
             className="cardCourses"

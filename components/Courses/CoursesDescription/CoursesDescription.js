@@ -17,21 +17,19 @@ import {
 } from "./CoursesDescription.options";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateCourse } from "@/api/course";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedCourse } from "@/actions/course";
 
 export default function CoursesDescription({ course }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const { status } = useSelector((state) => state.course);
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: initialValues(course),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
-      setIsLoading(true);
-
-      const response = await updateCourse(formData, course.id);
-      console.log(response);
-
-      setIsLoading(false);
+      dispatch(updatedCourse(formData, course.id));
     },
   });
 
@@ -195,7 +193,12 @@ export default function CoursesDescription({ course }) {
             </label>
           </Form.Field>
 
-          <Button loading={isLoading} type="submit" inverted color="blue">
+          <Button
+            loading={status === "loading"}
+            type="submit"
+            inverted
+            color="blue"
+          >
             Editar
           </Button>
         </div>

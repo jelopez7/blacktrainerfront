@@ -4,24 +4,22 @@ import BasicLayout from "@/layouts/BasicLayouts";
 import React from "react";
 import AddDay from "@/components/Courses/CoursesForm/AddDay";
 import CoursesList from "@/components/Courses/CoursesList";
-import { getCourses } from "@/api/course";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCourses } from "@/actions/course";
 
 export default function courses() {
   const [renderComponent, setRenderComponent] = useState({
     key: "coursersForm",
     data: null,
   });
-  const [courses, setCoursesCompoenent] = useState(null);
+
+  const { status, error } = useSelector((state) => state.course);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getCoursesApi = async () => {
-      const data = await getCourses();
-      if (data) {
-        setCoursesCompoenent(data.results);
-      }
-    };
-    getCoursesApi();
-  }, []);
+    dispatch(fetchCourses());
+  }, [dispatch]);
 
   const selectedComponent = ({ key, data }) => {
     if (key === "coursersForm") {
@@ -38,11 +36,12 @@ export default function courses() {
 
       {selectedComponent(renderComponent)}
 
-      {renderComponent.key === "coursersForm" && courses ? (
-        <CoursesList
-          setRenderComponent={setRenderComponent}
-          courses={courses}
-        />
+      {status === "loading" && <div>Loading...</div>}
+
+      {status === "failed" && <div>Error: {error}</div>}
+
+      {renderComponent.key === "coursersForm" && status === "succeeded" ? (
+        <CoursesList setRenderComponent={setRenderComponent} />
       ) : null}
     </BasicLayout>
   );
