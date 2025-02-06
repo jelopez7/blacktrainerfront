@@ -7,6 +7,8 @@ import CoursesList from "@/components/Courses/CoursesList";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCourses } from "@/actions/course";
 import Exercise from "@/components/Courses/Exercise";
+import { fetchCategorie } from "@/actions/categorie";
+import { fetchPostExercise } from "@/actions/postExercise";
 
 export default function courses() {
   const [renderComponent, setRenderComponent] = useState({
@@ -15,11 +17,20 @@ export default function courses() {
   });
 
   const { status, error } = useSelector((state) => state.course);
+  const { status: statusCategorie, error: errorCategorie } = useSelector(
+    (state) => state.categorie
+  );
+
+  const { status: statusPostExercise, error: errorPostExercise } = useSelector(
+    (state) => state.postExercise
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCourses());
+    dispatch(fetchCategorie());
+    dispatch(fetchPostExercise());
   }, [dispatch]);
 
   const selectedComponent = ({ key, data }) => {
@@ -42,9 +53,14 @@ export default function courses() {
 
       {status === "loading" && <div>Loading...</div>}
 
-      {status === "failed" && <div>Error: {error}</div>}
+      {status === "failed" ||
+        errorCategorie ||
+        (errorPostExercise && <div>Error: {error}</div>)}
 
-      {renderComponent.key === "coursersForm" && status === "succeeded" ? (
+      {renderComponent.key === "coursersForm" &&
+      (status === "succeeded" ||
+        statusCategorie === "succeeded" ||
+        statusPostExercise === "succeeded") ? (
         <CoursesList setRenderComponent={setRenderComponent} />
       ) : null}
     </BasicLayout>

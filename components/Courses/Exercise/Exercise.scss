@@ -1,7 +1,17 @@
 .exercise {
   margin-top: 50px;
 
+  .error {
+    background: #fff6f6 !important;
+    border-color: #e0b4b4 !important;
+    input {
+      background: #fff6f6 !important;
+      border-color: #e0b4b4 !important;
+    }
+  }
+
   .content {
+    margin-bottom: 50px;
     width: 500px;
     background: linear-gradient(#212121, #212121) padding-box,
       linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
@@ -15,6 +25,15 @@
     .back {
       position: absolute;
       top: 10px;
+    }
+    .exerciseDropdown {
+      .visible.menu.transition {
+        height: auto;
+        .ui.image {
+          max-height: 100px;
+          height: 100px;
+        }
+      }
     }
     .field {
       .input {

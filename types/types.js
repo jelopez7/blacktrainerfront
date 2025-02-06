@@ -20,4 +20,20 @@ export const types = {
   rejectedTrainingDay: "[trainingDay] rejected TrainingDay failed",
   addTrainingDay: "[trainingDay] Add TrainingDay",
   deleteTrainingDay: "[trainingDay] delete TrainingDay",
+
+  //categorie type
+  pedingCategorie: "[categorie] Loading categorie",
+  fulFilledCategorie: "[categorie] fulFiled categorie",
+  rejectedCategorie: "[categorie] rejected categorie",
+
+  //post_exercise type
+  pedingPostExercise: "[postExercise] loading postExercise",
+  fulfilledPostExercise: "[postExercise] fulFiled postExercise",
+  rejectedPostExercise: "[postExercise] rejected postExercise",
+
+  //exercise
+  pedingExercise: "[exercise] loading exercise",
+  fulFiledExercise: "[exercise] fulFiled exercise",
+  rejectedExercise: "[exercise] rejected exercise",
+  addExercise: "[exercise] add exercise",
 };
