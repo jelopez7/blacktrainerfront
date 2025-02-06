@@ -6,6 +6,7 @@ import AddDay from "@/components/Courses/CoursesForm/AddDay";
 import CoursesList from "@/components/Courses/CoursesList";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCourses } from "@/actions/course";
+import Exercise from "@/components/Courses/Exercise";
 
 export default function courses() {
   const [renderComponent, setRenderComponent] = useState({
@@ -27,6 +28,9 @@ export default function courses() {
     }
     if (key === "addDAy") {
       return <AddDay setRenderComponent={setRenderComponent} data={data} />;
+    }
+    if (key === "exercise") {
+      return <Exercise setRenderComponent={setRenderComponent} data={data} />;
     }
   };
 

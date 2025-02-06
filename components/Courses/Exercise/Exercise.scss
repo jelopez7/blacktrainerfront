@@ -1,0 +1,38 @@
+.exercise {
+  margin-top: 50px;
+
+  .content {
+    width: 500px;
+    background: linear-gradient(#212121, #212121) padding-box,
+      linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ui.form {
+    text-align: center;
+    .back {
+      position: absolute;
+      top: 10px;
+    }
+    .field {
+      .input {
+        margin-bottom: 5px;
+
+        input {
+          border: 0;
+          font-size: 16px;
+        }
+        i {
+          font-size: 19px;
+        }
+        &.error {
+          input {
+            border-bottom: 1px solid $danger;
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,12 +6,16 @@ import { Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { updateTrainingDays } from "@/api/trainingDay";
 
-export default function TrainingDay() {
+export default function TrainingDay({ setRenderComponent }) {
   const { data } = useSelector((state) => state.trainingDay);
 
   const [trainingDays, setTrainingDays] = useState(data);
 
   const [loading, setLoading] = useState(false);
+
+  const handleExercise = (exercise) => {
+    setRenderComponent({ key: "exercise", data: exercise });
+  };
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -40,7 +44,7 @@ export default function TrainingDay() {
         pick(item, ["id", "position"])
       );
 
-      const response = await updateTrainingDays(result);
+      await updateTrainingDays(result);
 
       setLoading(false);
     }
@@ -86,7 +90,9 @@ export default function TrainingDay() {
                           {item.title}
                         </div>
                       </div>
-                      <Button>Editar</Button>
+                      <Button onClick={() => handleExercise(item)}>
+                        Editar
+                      </Button>
                     </div>
                   )}
                 </Draggable>

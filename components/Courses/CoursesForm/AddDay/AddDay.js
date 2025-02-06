@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Form, Button, Icon, Grid } from "semantic-ui-react";
 import TrainingDay from "../../TrainingDay";
 import CoursesDescription from "../../CoursesDescription";
@@ -12,7 +12,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTrainingDay } from "@/actions/trainingDay";
+import { addTrainingDay, fetchTrainingDay } from "@/actions/trainingDay";
 import { size } from "lodash";
 
 export default function AddDay({ setRenderComponent, data }) {
@@ -51,6 +51,7 @@ export default function AddDay({ setRenderComponent, data }) {
           setRenderComponent={setRenderComponent}
           trainingDays={trainingDays}
           data={data}
+          dispatch={dispatch}
         />
       )}
 
@@ -64,7 +65,9 @@ export default function AddDay({ setRenderComponent, data }) {
 
             {status === "failed" && <div>Error: {error}</div>}
 
-            {status === "succeeded" && <TrainingDay />}
+            {status === "succeeded" && (
+              <TrainingDay setRenderComponent={setRenderComponent} />
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -72,18 +75,26 @@ export default function AddDay({ setRenderComponent, data }) {
   );
 }
 
-function RenderForm({ setRenderComponent, trainingDays, data }) {
+function RenderForm({ setRenderComponent, trainingDays, data, dispatch }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
+      setIsLoading(true);
       const formDataSend = {
         ...formData,
         position: size(trainingDays),
         course_id: data.id,
       };
 
-      console.log(formDataSend);
+      const result = await dispatch(addTrainingDay(formDataSend));
+
+      if (result) {
+        setIsLoading(false);
+        setRenderComponent({ key: "exercise", data: result });
+      }
     },
   });
   return (
@@ -111,7 +122,7 @@ function RenderForm({ setRenderComponent, trainingDays, data }) {
             />
           </Form.Field>
 
-          <Button type="submit" inverted color="green">
+          <Button type="submit" loading={isLoading} inverted color="green">
             Guardar
           </Button>
         </div>
