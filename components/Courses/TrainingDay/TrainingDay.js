@@ -1,9 +1,17 @@
+import { isEqual, map, pick, size } from "lodash";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { updateTrainingDays } from "@/api/trainingDay";
 
 export default function TrainingDay() {
-  const [trainingDays, setTrainingDays] = useState(items);
+  const { data } = useSelector((state) => state.trainingDay);
+
+  const [trainingDays, setTrainingDays] = useState(data);
+
+  const [loading, setLoading] = useState(false);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -19,6 +27,25 @@ export default function TrainingDay() {
     setTrainingDays(reorderedItems);
   };
 
+  if (size(data) <= 0) {
+    return null;
+  }
+
+  const handleOrder = async () => {
+    if (isEqual(data, trainingDays)) {
+      toast.warning("No has hecho ningun cambio");
+    } else {
+      setLoading(true);
+      const result = map(trainingDays, (item) =>
+        pick(item, ["id", "position"])
+      );
+
+      const response = await updateTrainingDays(result);
+
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="traingDay">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -30,7 +57,11 @@ export default function TrainingDay() {
               style={getListStyle(snapshot.isDraggingOver)}
             >
               {trainingDays.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable
+                  key={item.id + ""}
+                  draggableId={item.id + ""}
+                  index={index}
+                >
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -43,7 +74,7 @@ export default function TrainingDay() {
                     >
                       <div>
                         <div style={{ color: "#4a90e2", fontSize: "14px" }}>
-                          {item.content}
+                          {item.position + 1 + " día de entrenamiento"}
                         </div>
                         <div
                           style={{
@@ -52,7 +83,7 @@ export default function TrainingDay() {
                             justifyContent: "space-between",
                           }}
                         >
-                          {item.subcontent}
+                          {item.title}
                         </div>
                       </div>
                       <Button>Editar</Button>
@@ -65,6 +96,15 @@ export default function TrainingDay() {
           )}
         </Droppable>
       </DragDropContext>
+      <Button
+        onClick={handleOrder}
+        inverted
+        color="black"
+        className="buttonDay"
+        loading={loading}
+      >
+        Guardar
+      </Button>
     </div>
   );
 }
@@ -74,13 +114,14 @@ const reorder = (list, startIndex, endIndex) => {
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
-  return result;
-};
+  // Actualizar las posiciones de manera iterativa
+  const updatedItems = result.map((item, index) => ({
+    ...item,
+    position: index,
+  }));
 
-const items = [
-  { id: "1", content: "1 día de entrenamiento", subcontent: "pectoral+bíceps" },
-  { id: "2", content: "2 día de entrenamiento", subcontent: "pierna" },
-];
+  return updatedItems;
+};
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",

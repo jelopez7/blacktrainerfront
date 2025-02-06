@@ -13,4 +13,11 @@ export const types = {
   addCourse: "[course] add Course",
   updateCourse: "[course] update course",
   deleteCourse: "[course] delete course",
+
+  // training-day type
+  pendignTrainingDay: "[trainingDay] Loading TrainingDay",
+  fulFilledTrainingDay: "[trainingDay] fulFiled TrainingDay",
+  rejectedTrainingDay: "[trainingDay] rejected TrainingDay failed",
+  addTrainingDay: "[trainingDay] Add TrainingDay",
+  deleteTrainingDay: "[trainingDay] delete TrainingDay",
 };

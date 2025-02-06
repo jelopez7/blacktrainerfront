@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input, Form, Button, Icon, Grid } from "semantic-ui-react";
 import TrainingDay from "../../TrainingDay";
 import CoursesDescription from "../../CoursesDescription";
@@ -11,9 +11,19 @@ import {
 } from "@/utils/breakpoints";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTrainingDay } from "@/actions/trainingDay";
+import { size } from "lodash";
 
 export default function AddDay({ setRenderComponent, data }) {
   const { width } = useWindowSize();
+
+  const {
+    status,
+    error,
+    data: trainingDays,
+  } = useSelector((state) => state.trainingDay);
+  const dispatch = useDispatch();
 
   const getColumnsRender = () => {
     switch (true) {
@@ -30,9 +40,19 @@ export default function AddDay({ setRenderComponent, data }) {
     }
   };
 
+  useEffect(() => {
+    dispatch(fetchTrainingDay(data.id));
+  }, [dispatch]);
+
   return (
     <>
-      <RenderForm setRenderComponent={setRenderComponent} />
+      {status === "succeeded" && (
+        <RenderForm
+          setRenderComponent={setRenderComponent}
+          trainingDays={trainingDays}
+          data={data}
+        />
+      )}
 
       <Grid className="contentCoursesDef" columns={getColumnsRender()}>
         <Grid.Row>
@@ -40,7 +60,11 @@ export default function AddDay({ setRenderComponent, data }) {
             <CoursesDescription course={data} />
           </Grid.Column>
           <Grid.Column>
-            <TrainingDay />
+            {status === "loading" && <div>Loading...</div>}
+
+            {status === "failed" && <div>Error: {error}</div>}
+
+            {status === "succeeded" && <TrainingDay />}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -48,12 +72,18 @@ export default function AddDay({ setRenderComponent, data }) {
   );
 }
 
-function RenderForm({ setRenderComponent }) {
+function RenderForm({ setRenderComponent, trainingDays, data }) {
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
-      console.log(formData);
+      const formDataSend = {
+        ...formData,
+        position: size(trainingDays),
+        course_id: data.id,
+      };
+
+      console.log(formDataSend);
     },
   });
   return (
