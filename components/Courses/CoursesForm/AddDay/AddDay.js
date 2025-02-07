@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, Form, Button, Icon, Grid } from "semantic-ui-react";
 import TrainingDay from "../../TrainingDay";
 import CoursesDescription from "../../CoursesDescription";
