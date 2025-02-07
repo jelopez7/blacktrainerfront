@@ -21,8 +21,6 @@ export const addExercise = (formData) => {
     try {
       const data = await createExercise(formData);
 
-      console.log(data);
-
       dispatch({ type: types.addExercise, payload: data });
 
       return data;

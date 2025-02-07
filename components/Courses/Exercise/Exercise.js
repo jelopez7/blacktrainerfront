@@ -7,16 +7,17 @@ import {
   breakpointUpXl,
 } from "@/utils/breakpoints";
 import { useFormik } from "formik";
-import { filter, map, size } from "lodash";
+import { filter, find, map, size } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dropdown, Form, Grid, Icon, Input } from "semantic-ui-react";
 import * as Yup from "yup";
+import ExerciseList from "../ExerciseList";
 
 export default function Exercise({ setRenderComponent, data }) {
   const { data: dataCategorie } = useSelector((state) => state.categorie);
   const { data: postExercise } = useSelector((state) => state.postExercise);
-  const { data: dataExercise } = useSelector((state) => state.exercise);
+  const { data: dataExercise, status } = useSelector((state) => state.exercise);
 
   const dispatch = useDispatch();
 
@@ -78,11 +79,15 @@ export default function Exercise({ setRenderComponent, data }) {
     }),
     onSubmit: async (formData) => {
       setIsLoading(true);
+      const exerciseSelected = find(postExercise, {
+        id: formData.post_exercise_id,
+      });
 
       const formDataSend = {
         ...formData,
         position: size(dataExercise),
         training_day_id: data.id,
+        exerciseSelected,
       };
 
       await dispatch(addExercise(formDataSend));
@@ -150,6 +155,19 @@ export default function Exercise({ setRenderComponent, data }) {
           </div>
         )}
       </Form>
+
+      {status === "loading" ? (
+        <div>Cargando ejercicios </div>
+      ) : (
+        <Grid className="contentExerciseDef">
+          <Grid.Row columns={getColumnsRender()}>
+            <Grid.Column>
+              <ExerciseList />
+            </Grid.Column>
+            <Grid.Column>Form</Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
     </div>
   );
 }

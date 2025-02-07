@@ -23,7 +23,10 @@ export async function createExercise(formData) {
       `/content-manager/collection-types/api::exercise.exercise/${data.id}/actions/publish`
     );
 
-    return data;
+    return {
+      ...data,
+      post_exercise_id: formData.exerciseSelected,
+    };
   } catch (error) {
     console.log(error);
     return null;

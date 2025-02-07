@@ -8,7 +8,7 @@ const initialState = {
 
 export const exerciseReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.pedingCategorie:
+    case types.pedingExercise:
       return {
         ...state,
         status: "loading",

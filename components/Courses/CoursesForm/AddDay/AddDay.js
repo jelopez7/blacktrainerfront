@@ -55,8 +55,8 @@ export default function AddDay({ setRenderComponent, data }) {
         />
       )}
 
-      <Grid className="contentCoursesDef" columns={getColumnsRender()}>
-        <Grid.Row>
+      <Grid className="contentCoursesDef">
+        <Grid.Row columns={getColumnsRender()}>
           <Grid.Column>
             <CoursesDescription course={data} />
           </Grid.Column>
