@@ -135,7 +135,7 @@ export default function Exercise({ setRenderComponent, data }) {
             <div
               className="back"
               onClick={() =>
-                setRenderComponent({ key: "coursersForm", data: null })
+                setRenderComponent({ key: "addDAy", data: data.dataCourse })
               }
             >
               <Icon name="arrow circle left" color="teal" link size="large" />

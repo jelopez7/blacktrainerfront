@@ -66,7 +66,10 @@ export default function AddDay({ setRenderComponent, data }) {
             {status === "failed" && <div>Error: {error}</div>}
 
             {status === "succeeded" && (
-              <TrainingDay setRenderComponent={setRenderComponent} />
+              <TrainingDay
+                setRenderComponent={setRenderComponent}
+                data={data}
+              />
             )}
           </Grid.Column>
         </Grid.Row>

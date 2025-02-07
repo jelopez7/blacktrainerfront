@@ -6,7 +6,7 @@ import { Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { updateTrainingDays } from "@/api/trainingDay";
 
-export default function TrainingDay({ setRenderComponent }) {
+export default function TrainingDay({ setRenderComponent, data: dataCourse }) {
   const { data } = useSelector((state) => state.trainingDay);
 
   const [trainingDays, setTrainingDays] = useState(data);
@@ -14,7 +14,7 @@ export default function TrainingDay({ setRenderComponent }) {
   const [loading, setLoading] = useState(false);
 
   const handleExercise = (exercise) => {
-    setRenderComponent({ key: "exercise", data: exercise });
+    setRenderComponent({ key: "exercise", data: { ...exercise, dataCourse } });
   };
 
   const onDragEnd = (result) => {
