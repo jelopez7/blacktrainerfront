@@ -26,7 +26,7 @@ export default function CoursesDescription({ course }) {
   const { status } = useSelector((state) => state.course);
 
   const [file, setFile] = useState(null);
-  const [photoCourse, setPhotoCourse] = useState(course.photo.url);
+  const [photoCourse, setPhotoCourse] = useState(course?.photo?.url);
 
   const dispatch = useDispatch();
 

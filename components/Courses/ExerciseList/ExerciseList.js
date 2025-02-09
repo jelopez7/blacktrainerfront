@@ -1,4 +1,5 @@
-import { size } from "lodash";
+import { updateExercises } from "@/api/exercise";
+import { isEqual, map, pick, size } from "lodash";
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
@@ -22,14 +23,25 @@ export default function ExerciseList() {
       result.destination.index
     );
 
-    console.log(reorderedItems);
-
     setExercises(reorderedItems);
   };
 
   if (size(exercises) <= 0) {
     return null;
   }
+
+  const handleOrder = async () => {
+    if (isEqual(data, exercises)) {
+      toast.warning("No has hecho ningun cambio");
+    } else {
+      setLoading(true);
+      const result = map(exercises, (item) => pick(item, ["id", "position"]));
+
+      await updateExercises(result);
+
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="exerciseList">
@@ -79,7 +91,13 @@ export default function ExerciseList() {
           )}
         </Droppable>
       </DragDropContext>
-      <Button inverted color="black" className="buttonDay" loading={loading}>
+      <Button
+        onClick={handleOrder}
+        inverted
+        color="black"
+        className="buttonDay"
+        loading={loading}
+      >
         Guardar
       </Button>
     </div>

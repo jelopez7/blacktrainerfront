@@ -96,7 +96,10 @@ function RenderForm({ setRenderComponent, trainingDays, data, dispatch }) {
 
       if (result) {
         setIsLoading(false);
-        setRenderComponent({ key: "exercise", data: result });
+        setRenderComponent({
+          key: "exercise",
+          data: { ...result, dataCourse: data },
+        });
       }
     },
   });

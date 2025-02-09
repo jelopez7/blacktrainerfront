@@ -32,3 +32,22 @@ export async function createExercise(formData) {
     return null;
   }
 }
+
+export async function updateExercises(exercises) {
+  try {
+    const promises = exercises.map(async (item) => {
+      const { data } = await httpConToken.put(
+        `/content-manager/collection-types/api::exercise.exercise/${item.id}`,
+        item
+      );
+      return data;
+    });
+
+    // Esperar a que todas las promesas se resuelvan
+    const results = await Promise.all(promises);
+    return results;
+  } catch (error) {
+    console.error("Error al obtener los días de entrenamiento:", error);
+    return null;
+  }
+}
