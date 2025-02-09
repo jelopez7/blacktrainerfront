@@ -24,7 +24,7 @@ export default function CoursesList({ setRenderComponent }) {
               className="imageCourse"
               src={
                 course.photo
-                  ? course.photo
+                  ? course.photo.url
                   : "https://cdn.fitnessonlineapp.com/uploads/ma/file/543/385a663203042b78.jpg"
               }
               alt="Blackfitness"
