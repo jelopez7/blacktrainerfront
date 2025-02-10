@@ -25,7 +25,7 @@
 
       img {
         display: block;
-        width: 100%;
+        width: 100%; /* Ajusta el tamaño de la imagen según sea necesario */
         height: auto;
       }
 
@@ -49,6 +49,14 @@
           }
         }
       }
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .cardCourses {
+    img {
+      height: 200px !important;
     }
   }
 }

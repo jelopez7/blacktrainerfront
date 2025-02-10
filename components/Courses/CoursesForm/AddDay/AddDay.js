@@ -36,7 +36,7 @@ export default function AddDay({ setRenderComponent, data }) {
       case width > breakpointUpSm:
         return 1;
       default:
-        return 2;
+        return 1;
     }
   };
 
