@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { Button, Image } from "semantic-ui-react";
 
-export default function ExerciseList() {
+export default function ExerciseList({ setExerciseSelected }) {
   const { data } = useSelector((state) => state.exercise);
 
   const [exercises, setExercises] = useState(data);
@@ -81,7 +81,13 @@ export default function ExerciseList() {
                           {item.post_exercise_id.title}
                         </div>
                       </div>
-                      <Button>Editar</Button>
+                      <Button
+                        onClick={() => {
+                          setExerciseSelected(item);
+                        }}
+                      >
+                        Editar
+                      </Button>
                     </div>
                   )}
                 </Draggable>

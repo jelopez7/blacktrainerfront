@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Dropdown, Form, Grid, Icon, Input } from "semantic-ui-react";
 import * as Yup from "yup";
 import ExerciseList from "../ExerciseList";
+import ExerciseForm from "../ExerciseForm";
 
 export default function Exercise({ setRenderComponent, data }) {
   const { data: dataCategorie } = useSelector((state) => state.categorie);
@@ -23,6 +24,7 @@ export default function Exercise({ setRenderComponent, data }) {
 
   const [categorieSelected, setCategorieSelected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [exerciseSelected, setExerciseSelected] = useState(null);
 
   const [exerciseDrop, setExerciseDrop] = useState([]);
 
@@ -162,9 +164,14 @@ export default function Exercise({ setRenderComponent, data }) {
         <Grid className="contentExerciseDef">
           <Grid.Row columns={getColumnsRender()}>
             <Grid.Column>
-              <ExerciseList />
+              <ExerciseList setExerciseSelected={setExerciseSelected} />
             </Grid.Column>
-            <Grid.Column>Form</Grid.Column>
+            <Grid.Column>
+              <ExerciseForm
+                setExerciseSelected={setExerciseSelected}
+                exerciseSelected={exerciseSelected}
+              />
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       )}
