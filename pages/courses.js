@@ -9,8 +9,23 @@ import { fetchCourses } from "@/actions/course";
 import Exercise from "@/components/Courses/Exercise";
 import { fetchCategorie } from "@/actions/categorie";
 import { fetchPostExercise } from "@/actions/postExercise";
+import { useRouter } from "next/router";
 
 export default function courses() {
+  const { user } = useSelector((state) => state.auth);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && typeof window !== "undefined") {
+      router.push("/auth"); // Redirige a la página de inicio de sesión si el usuario no está autenticado
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return null;
+  }
+
   const [renderComponent, setRenderComponent] = useState({
     key: "coursersForm",
     data: null,

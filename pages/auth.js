@@ -11,9 +11,13 @@ export default function Auth() {
 
   useEffect(() => {
     if (user && window !== "undefined") {
-      router.push("/"); // Redirige a la página de inicio de sesión si el usuario no está autenticado
+      router.push("/courses"); // Redirige a la página de inicio de sesión si el usuario no está autenticado
     }
   }, [user, router]);
+
+  if (user) {
+    return null;
+  }
 
   const handleForm = () => {
     switch (selectedForm) {

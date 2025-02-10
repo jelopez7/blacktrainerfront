@@ -54,7 +54,7 @@ export const startLogin = (formData) => {
       if (data) {
         dispath(Login(data.data));
         setToken(data.data.token);
-        window.location.replace("/");
+        window.location.replace("/courses");
       }
     } catch (error) {
       console.log(error);
@@ -96,8 +96,8 @@ export const startRegister = (formData) => {
 
 export const startLogout = () => {
   return (dispatch) => {
-    localStorage.clear();
     dispatch(Logout());
+    localStorage.clear();
   };
 };
 
